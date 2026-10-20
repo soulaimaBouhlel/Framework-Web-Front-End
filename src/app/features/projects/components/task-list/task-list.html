@@ -1,0 +1,15 @@
+@if (tasks().length === 0) {
+<p class="text-sm italic text-gray-500">Aucune tâche.</p>
+} @else {
+<ul class="space-y-2">
+    @for (task of tasks(); track task.id) {
+    <li class="border-l-4 p-2 rounded" [class]="statusClass(task.status)">
+        <p class="font-medium">{{ task.title }}</p>
+        <p class="text-xs text-gray-600">Priorité : {{ task.priority }} · {{ task.status }}</p>
+        @if (showAssignee()) {
+        <p class="text-xs text-gray-500">Assignée à : {{ assigneeName(task.assigneeId) }}</p>
+        }
+    </li>
+    }
+</ul>
+}

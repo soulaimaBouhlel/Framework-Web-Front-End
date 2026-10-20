@@ -1,0 +1,6 @@
+<div class="space-y-2">
+    <h4 class="text-sm font-semibold">
+        {{ projectName() }} <span class="text-gray-500">({{ tasks().length }})</span>
+    </h4>
+    <app-task-list [tasks]="tasks()" [showAssignee]="false" />
+</div>

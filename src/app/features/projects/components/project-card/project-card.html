@@ -1,0 +1,15 @@
+<div class="bg-white shadow rounded-lg p-4 space-y-3">
+    <div class="flex items-start justify-between">
+        <h2 class="text-lg font-semibold">{{ project().name }}</h2>
+        <span class="text-xs px-2 py-1 rounded-full" [class]="statusClass()">
+            {{ project().status }}
+        </span>
+    </div>
+    <p class="text-gray-600">{{ project().description }}</p>
+
+    <app-task-list [tasks]="project().tasks" />
+
+    <button (click)="selectProject()" class="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+        Sélectionner
+    </button>
+</div>

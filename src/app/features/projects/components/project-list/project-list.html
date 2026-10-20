@@ -1,0 +1,10 @@
+<div class="max-w-5xl mx-auto p-6 space-y-4">
+    <input type="text" placeholder="Rechercher un projet..." [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)" class="w-full border rounded px-3 py-2" />
+
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        @for (project of filteredProjects(); track project.id) {
+        <app-project-card [project]="project" (projectSelected)="onProjectSelected($event)" />
+        }
+    </div>
+</div>

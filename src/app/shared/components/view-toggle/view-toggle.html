@@ -1,0 +1,10 @@
+<div class="inline-flex rounded-lg border border-gray-300 overflow-hidden">
+    <button type="button" class="px-4 py-2 text-sm" [class.bg-indigo-600]="view() === 'task'"
+        [class.text-white]="view() === 'task'" [class.bg-white]="view() !== 'task'" (click)="viewChange.emit('task')">
+        Par tâche
+    </button>
+    <button type="button" class="px-4 py-2 text-sm" [class.bg-indigo-600]="view() === 'user'"
+        [class.text-white]="view() === 'user'" [class.bg-white]="view() !== 'user'" (click)="viewChange.emit('user')">
+        Par user
+    </button>
+</div>
