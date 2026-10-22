@@ -4,36 +4,64 @@ export const PROJECTS: Project[] = [
     {
         id: 1, name: 'Refonte du site web', description: 'Nouvelle identité visuelle et nouvelle navigation.',
         status: 'En cours',
+        startDate: '2026-09-01',
+        budget: 15000,
         tasks: [
-            { id: 1, title: 'Maquettes de l\'accueil', priority: 'Haute', status: 'Terminé', assigneeId: 1 },
-            { id: 2, title: 'Intégration du header', priority: 'Moyenne', status: 'Terminé', assigneeId: 1 },
-            { id: 3, title: 'Formulaire de contact', priority: 'Moyenne', status: 'En cours', assigneeId: 1 },
-            { id: 4, title: 'Optimisation des images', priority: 'Basse', status: 'En attente', assigneeId: 1 },
-            { id: 5, title: 'Tests responsive', priority: 'Haute', status: 'En attente', assigneeId: 3 },
+            {
+                id: 1, title: 'Maquettes de l\'accueil', priority: 'Haute', status: 'Terminé', assigneeId: 1,
+                dueDate: '2026-09-10',
+                description: 'Créer les maquettes haute fidélité de la page d\'accueil pour validation par le client avant l\'intégration.',
+            },
+            { id: 2, title: 'Intégration du header', priority: 'Moyenne', status: 'Terminé', assigneeId: 1, dueDate: '2026-09-20' },
+            {
+                id: 3, title: 'Formulaire de contact', priority: 'Moyenne', status: 'En cours', assigneeId: 1,
+                dueDate: '2026-10-02',
+                description: 'Développer le formulaire de contact avec validation des champs et envoi de la demande vers l\'équipe support.',
+            },
+            { id: 4, title: 'Optimisation des images', priority: 'Basse', status: 'En attente', assigneeId: 1, dueDate: '2026-10-30' },
+            {
+                id: 5, title: 'Tests responsive', priority: 'Haute', status: 'En attente', assigneeId: 3,
+                dueDate: '2026-11-15',
+                description: 'Tester l\'affichage sur mobile et tablette.', // texte court : ne doit pas être tronqué
+            },
         ],
     },
     {
         id: 2, name: 'Application mobile', description: 'Version mobile de TaskFlow.',
         status: 'En attente',
+        startDate: '2026-09-15',
+        budget: 24000,
         tasks: [
-            { id: 6, title: 'Choix de la stack', priority: 'Haute', status: 'Terminé', assigneeId: 1 },
-            { id: 7, title: 'Authentification', priority: 'Haute', status: 'En cours', assigneeId: 2 },
-            { id: 8, title: 'Écran de profil', priority: 'Moyenne', status: 'En attente', assigneeId: 1 },
-            { id: 9, title: 'Notifications push', priority: 'Basse', status: 'En attente' }, // non assignée
+            { id: 6, title: 'Choix de la stack', priority: 'Haute', status: 'Terminé', assigneeId: 1, dueDate: '2026-09-15' },
+            {
+                id: 7, title: 'Authentification', priority: 'Haute', status: 'En cours', assigneeId: 2,
+                dueDate: '2026-10-25',
+                description: 'Mettre en place l\'authentification des utilisateurs sur l\'application mobile avec gestion de la session.',
+            },
+            { id: 8, title: 'Écran de profil', priority: 'Moyenne', status: 'En attente', assigneeId: 1, dueDate: '2026-10-01' },
+            { id: 9, title: 'Notifications push', priority: 'Basse', status: 'En attente' }, // ni échéance, ni description, non assignée
         ],
     },
     {
         id: 3, name: 'Migration base de données', description: 'Passage vers un nouveau serveur.',
         status: 'En cours',
+        startDate: '2026-08-20',
+        budget: 9000,
         tasks: [
-            { id: 10, title: 'Audit du schéma', priority: 'Haute', status: 'Terminé', assigneeId: 2 },
-            { id: 11, title: 'Script de migration', priority: 'Haute', status: 'Terminé', assigneeId: 2 },
-            { id: 12, title: 'Validation des données', priority: 'Moyenne', status: 'En cours', assigneeId: 3 },
+            { id: 10, title: 'Audit du schéma', priority: 'Haute', status: 'Terminé', assigneeId: 2, dueDate: '2026-09-05' },
+            { id: 11, title: 'Script de migration', priority: 'Haute', status: 'Terminé', assigneeId: 2, dueDate: '2026-09-25' },
+            {
+                id: 12, title: 'Validation des données', priority: 'Moyenne', status: 'En cours', assigneeId: 3,
+                dueDate: '2026-10-20',
+                description: 'Vérifier la cohérence des données migrées en comparant les volumes et les contenus avec l\'ancien serveur.',
+            },
         ],
     },
     {
         id: 4, name: 'Documentation technique', description: 'Guide développeur.',
         status: 'En attente',
+        startDate: '2026-11-01',
+        budget: 5000,
         tasks: [], // projet sans tâche
     },
 ];

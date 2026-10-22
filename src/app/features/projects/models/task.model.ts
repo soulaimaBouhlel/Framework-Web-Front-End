@@ -7,4 +7,6 @@ export interface Task {
     priority: TaskPriority;
     status: TaskStatus;
     assigneeId?: number;
+    dueDate?: string;      // TP3 : format 'YYYY-MM-DD', optionnelle
+    description?: string;  // TP3 : description détaillée, optionnelle
 }

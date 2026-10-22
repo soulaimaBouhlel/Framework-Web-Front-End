@@ -7,5 +7,7 @@ export interface Project {
   name: string;
   description: string;
   status: ProjectStatus;
+  startDate: string;     // TP3 : format 'YYYY-MM-DD'
+  budget: number;        // TP3 : budget en dinars tunisiens (TND)
   tasks: Task[];
 }
