@@ -1,11 +1,14 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
+import { DeadlinePipe } from '../../../../shared/pipes/deadline.pipe';
 import { Task } from '../../models/task.model';
 import { User } from '../../../users/models/user.model';
 import { UserService } from '../../../../core/services/user.service';
 
 @Component({
   selector: 'app-task-list',
-  imports: [],
+  imports: [DatePipe, TruncatePipe, DeadlinePipe],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })

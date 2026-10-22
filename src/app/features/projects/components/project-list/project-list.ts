@@ -15,6 +15,7 @@ export class ProjectList implements OnInit {
 
   projects = signal<Project[]>([]);
   searchTerm = signal('');
+  selectedProject = signal<Project | null>(null);   // projet actuellement sélectionné
 
   filteredProjects = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
@@ -29,5 +30,6 @@ export class ProjectList implements OnInit {
 
   onProjectSelected(project: Project): void {
     console.log(project);
+    this.selectedProject.set(project);
   }
 }

@@ -2,9 +2,16 @@
     <input type="text" placeholder="Rechercher un projet..." [ngModel]="searchTerm()"
         (ngModelChange)="searchTerm.set($event)" class="w-full border rounded px-3 py-2" />
 
+    @if (selectedProject(); as selected) {
+    <p class="rounded bg-indigo-50 text-indigo-800 px-3 py-2 text-sm">
+        Projet sélectionné : <strong>{{ selected.name }}</strong>
+    </p>
+    }
+
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         @for (project of filteredProjects(); track project.id) {
-        <app-project-card [project]="project" (projectSelected)="onProjectSelected($event)" />
+        <app-project-card [project]="project" [selected]="selectedProject()?.id === project.id"
+            (projectSelected)="onProjectSelected($event)" />
         }
     </div>
 </div>

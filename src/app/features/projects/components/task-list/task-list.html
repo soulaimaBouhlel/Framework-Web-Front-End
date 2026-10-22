@@ -5,7 +5,26 @@
     @for (task of tasks(); track task.id) {
     <li class="border-l-4 p-2 rounded" [class]="statusClass(task.status)">
         <p class="font-medium">{{ task.title }}</p>
-        <p class="text-xs text-gray-600">Priorité : {{ task.priority }} · {{ task.status }}</p>
+        <p class="text-xs text-gray-600">
+            Priorité :
+            <!-- Q3 : @switch sur la priorité -->
+            @switch (task.priority) {
+            @case ('Haute') { <span class="text-red-600">▲ Haute</span> }
+            @case ('Moyenne') { <span class="text-amber-600">● Moyenne</span> }
+            @default { <span class="text-green-600">▼ Basse</span> }
+            }
+            · {{ task.status }}
+        </p>
+        <!-- Q2 : description uniquement si elle existe -->
+        @if (task.description) {
+        <p class="text-sm text-gray-700">{{ task.description | truncate: 40 }}</p>
+        }
+        <!-- Q1 : alias « as » pour ne pas répéter task.dueDate -->
+        @if (task.dueDate; as due) {
+        <p class="text-xs text-gray-600">Échéance : {{ due | date: 'dd/MM/yyyy' }} · {{ due | deadline }}</p>
+        } @else {
+        <p class="text-xs italic text-gray-400">Aucune échéance</p>
+        }
         @if (showAssignee()) {
         <p class="text-xs text-gray-500">Assignée à : {{ assigneeName(task.assigneeId) }}</p>
         }

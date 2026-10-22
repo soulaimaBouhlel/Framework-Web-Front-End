@@ -1,12 +1,14 @@
 import { Component, computed, input } from '@angular/core';
+import { LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { User } from '../../models/user.model';
 import { Project } from '../../../projects/models/project.model';
 import { UserProjectGroup } from '../user-project-group/user-project-group';
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
+import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 
 @Component({
   selector: 'app-user-card',
-  imports: [UserProjectGroup, EmptyState],
+  imports: [UserProjectGroup, EmptyState, TitleCasePipe, LowerCasePipe, InitialsPipe],
   templateUrl: './user-card.html',
   styleUrl: './user-card.css',
 })
