@@ -3,7 +3,12 @@
 } @else {
 <ul class="space-y-2">
     @for (task of tasks(); track task.id) {
-    <li class="border-l-4 p-2 rounded" [class]="statusClass(task.status)">
+    <!-- Q1 ngClass : couleur de bordure (et fond) selon le statut -->
+    <li class="border-l-4 p-2 rounded" [ngClass]="{
+            'border-green-500 bg-green-50': task.status === 'Terminé',
+            'border-blue-500 bg-blue-50': task.status === 'En cours',
+            'border-gray-400 bg-gray-50': task.status === 'En attente'
+        }">
         <p class="font-medium">{{ task.title }}</p>
         <p class="text-xs text-gray-600">
             Priorité :

@@ -1,6 +1,6 @@
 import { Component, computed, input, output } from '@angular/core';
 import {
-  CurrencyPipe, DatePipe, DecimalPipe, KeyValuePipe, PercentPipe, SlicePipe, UpperCasePipe,
+  CurrencyPipe, DatePipe, DecimalPipe, KeyValuePipe, NgStyle, PercentPipe, SlicePipe, UpperCasePipe,
 } from '@angular/common';
 import { Project } from '../../models/project.model';
 import { TaskPriority } from '../../models/task.model';
@@ -10,6 +10,7 @@ import { TaskList } from '../task-list/task-list';
   selector: 'app-project-card',
   imports: [
     TaskList,
+    NgStyle,
     UpperCasePipe, DatePipe, CurrencyPipe, PercentPipe, DecimalPipe, SlicePipe, KeyValuePipe,
   ],
   templateUrl: './project-card.html',
@@ -27,6 +28,14 @@ export class ProjectCard {
     const done = tasks.filter(t => t.status === 'Terminé').length;
     return done / tasks.length;
   });
+
+  // ngStyle Q2 — couleur de la barre de progression selon le taux de réalisation
+  get barColor(): string {
+    const percent = this.completionRate() * 100;
+    if (percent < 34) return '#ef4444';   // rouge
+    if (percent <= 66) return '#f59e0b';  // orange
+    return '#22c55e';                     // vert
+  }
 
   // Q5 — coût moyen par tâche (l'arrondi est fait par le pipe number)
   averageCost = computed(() => {
