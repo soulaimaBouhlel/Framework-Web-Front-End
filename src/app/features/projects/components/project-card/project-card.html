@@ -1,4 +1,6 @@
-<div class="bg-white shadow rounded-lg p-4 space-y-3" [class.ring-2]="selected()" [class.ring-indigo-500]="selected()">
+<!-- HighlightDirective avec une couleur de survol personnalisée (bleu clair) -->
+<div class="bg-white shadow rounded-lg p-4 space-y-3" [class.ring-2]="selected()" [class.ring-indigo-500]="selected()"
+    appHighlight="#e0f2fe">
     <div class="flex items-start justify-between">
         <!-- Q1 : uppercase -->
         <h2 class="text-lg font-semibold">{{ project().name | uppercase }}</h2>

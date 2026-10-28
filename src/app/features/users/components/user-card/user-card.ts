@@ -5,10 +5,11 @@ import { Project } from '../../../projects/models/project.model';
 import { UserProjectGroup } from '../user-project-group/user-project-group';
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
+import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
 
 @Component({
   selector: 'app-user-card',
-  imports: [UserProjectGroup, EmptyState, NgClass, NgStyle, TitleCasePipe, LowerCasePipe, InitialsPipe],
+  imports: [UserProjectGroup, EmptyState, NgClass, NgStyle, TitleCasePipe, LowerCasePipe, InitialsPipe, HighlightDirective],
   templateUrl: './user-card.html',
   styleUrl: './user-card.css',
 })

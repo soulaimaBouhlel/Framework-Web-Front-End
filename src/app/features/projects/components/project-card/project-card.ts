@@ -5,12 +5,14 @@ import {
 import { Project } from '../../models/project.model';
 import { TaskPriority } from '../../models/task.model';
 import { TaskList } from '../task-list/task-list';
+import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
 
 @Component({
   selector: 'app-project-card',
   imports: [
     TaskList,
     NgStyle,
+    HighlightDirective,
     UpperCasePipe, DatePipe, CurrencyPipe, PercentPipe, DecimalPipe, SlicePipe, KeyValuePipe,
   ],
   templateUrl: './project-card.html',

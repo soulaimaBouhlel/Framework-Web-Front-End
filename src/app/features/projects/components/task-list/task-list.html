@@ -8,7 +8,7 @@
             'border-green-500 bg-green-50': task.status === 'Terminé',
             'border-blue-500 bg-blue-50': task.status === 'En cours',
             'border-gray-400 bg-gray-50': task.status === 'En attente'
-        }">
+        }" appHighlight appOverdue [dueDate]="task.dueDate" [done]="task.status === 'Terminé'">
         <p class="font-medium">{{ task.title }}</p>
         <p class="text-xs text-gray-600">
             Priorité :
@@ -22,7 +22,8 @@
         </p>
         <!-- Q2 : description uniquement si elle existe -->
         @if (task.description) {
-        <p class="text-sm text-gray-700">{{ task.description | truncate: 40 }}</p>
+        <!-- TooltipDirective : description complète au survol du texte tronqué -->
+        <p class="text-sm text-gray-700 cursor-help" [appTooltip]="task.description">{{ task.description | truncate: 40 }}</p>
         }
         <!-- Q1 : alias « as » pour ne pas répéter task.dueDate -->
         @if (task.dueDate; as due) {
