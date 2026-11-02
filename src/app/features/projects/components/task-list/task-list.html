@@ -1,40 +1,12 @@
-@if (tasks().length === 0) {
-<p class="text-sm italic text-gray-500">Aucune tâche.</p>
-} @else {
 <ul class="space-y-2">
+    <!-- Partie 2.2 : @for + track sur l'identifiant unique de la tâche -->
     @for (task of tasks(); track task.id) {
-    <!-- Q1 ngClass : couleur de bordure (et fond) selon le statut -->
-    <li class="border-l-4 p-2 rounded" [ngClass]="{
-            'border-green-500 bg-green-50': task.status === 'Terminé',
-            'border-blue-500 bg-blue-50': task.status === 'En cours',
-            'border-gray-400 bg-gray-50': task.status === 'En attente'
-        }" appHighlight appOverdue [dueDate]="task.dueDate" [done]="task.status === 'Terminé'">
-        <p class="font-medium">{{ task.title }}</p>
-        <p class="text-xs text-gray-600">
-            Priorité :
-            <!-- Q3 : @switch sur la priorité -->
-            @switch (task.priority) {
-            @case ('Haute') { <span class="text-red-600">▲ Haute</span> }
-            @case ('Moyenne') { <span class="text-amber-600">● Moyenne</span> }
-            @default { <span class="text-green-600">▼ Basse</span> }
-            }
-            · {{ task.status }}
-        </p>
-        <!-- Q2 : description uniquement si elle existe -->
-        @if (task.description) {
-        <!-- TooltipDirective : description complète au survol du texte tronqué -->
-        <p class="text-sm text-gray-700 cursor-help" [appTooltip]="task.description">{{ task.description | truncate: 40 }}</p>
-        }
-        <!-- Q1 : alias « as » pour ne pas répéter task.dueDate -->
-        @if (task.dueDate; as due) {
-        <p class="text-xs text-gray-600">Échéance : {{ due | date: 'dd/MM/yyyy' }} · {{ due | deadline }}</p>
-        } @else {
-        <p class="text-xs italic text-gray-400">Aucune échéance</p>
-        }
-        @if (showAssignee()) {
-        <p class="text-xs text-gray-500">Assignée à : {{ assigneeName(task.assigneeId) }}</p>
-        }
+    <li>
+        <app-task-item [task]="task" [showAssignee]="showAssignee()" [assigneeName]="assigneeName(task.assigneeId)"
+            [canChangeStatus]="canChangeStatus()" (taskStatusChange)="onTaskStatusChange(task.id, $event)" />
     </li>
+    } @empty {
+    <!-- Partie 2.3 -->
+    <li class="text-sm italic text-gray-500">Aucune tâche</li>
     }
 </ul>
-}

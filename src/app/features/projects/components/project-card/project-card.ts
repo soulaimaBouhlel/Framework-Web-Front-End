@@ -3,7 +3,8 @@ import {
   CurrencyPipe, DatePipe, DecimalPipe, KeyValuePipe, NgStyle, PercentPipe, SlicePipe, UpperCasePipe,
 } from '@angular/common';
 import { Project } from '../../models/project.model';
-import { TaskPriority } from '../../models/task.model';
+import { ProjectTaskStatusChange, TaskPriority, TaskStatusChange } from '../../models/task.model';
+import { User } from '../../../users/models/user.model';
 import { TaskList } from '../task-list/task-list';
 import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
 
@@ -21,14 +22,20 @@ import { HighlightDirective } from '../../../../shared/directives/highlight.dire
 export class ProjectCard {
   project = input.required<Project>();
   selected = input(false);   // vrai si cette carte est le projet sélectionné
+  users = input<User[]>([]);   // TP4 Partie 5 : transmis tel quel à TaskList
   projectSelected = output<Project>();
 
-  // Q4 — taux de réalisation entre 0 et 1 (le pipe percent multiplie par 100)
+  // TP4 Partie 3.5 — on relaie l'événement en ajoutant projectId (Partie 3.7)
+  taskStatusChange = output<ProjectTaskStatusChange>();
+
+  // TP4 Partie 4.3 — nombre de tâches terminées
+  doneCount = computed(() => this.project().tasks.filter(t => t.status === 'Terminé').length);
+
+  // Q4 (TP3) / TP4 Partie 4.4 — taux de réalisation entre 0 et 1, calculé à partir de doneCount
   completionRate = computed(() => {
-    const tasks = this.project().tasks;
-    if (tasks.length === 0) return 0;               // protection division par zéro
-    const done = tasks.filter(t => t.status === 'Terminé').length;
-    return done / tasks.length;
+    const total = this.project().tasks.length;
+    if (total === 0) return 0;                      // protection division par zéro
+    return this.doneCount() / total;
   });
 
   // ngStyle Q2 — couleur de la barre de progression selon le taux de réalisation
@@ -54,6 +61,11 @@ export class ProjectCard {
     }
     return counts;
   });
+
+  // On ne modifie pas this.project() (entrée) : on se contente de remonter l'information
+  onTaskStatusChange(change: TaskStatusChange): void {
+    this.taskStatusChange.emit({ projectId: this.project().id, ...change });
+  }
 
   selectProject(): void {
     this.projectSelected.emit(this.project());

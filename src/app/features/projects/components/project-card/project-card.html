@@ -44,6 +44,10 @@
 
         <!-- Q4 et Q5 : seulement si le projet a des tâches (division par zéro) -->
         @if (project().tasks.length > 0) {
+        <!-- TP4 Partie 4.3 : compteur de tâches terminées -->
+        <dt class="text-gray-500">Tâches terminées</dt>
+        <dd>{{ doneCount() }} / {{ project().tasks.length }}</dd>
+
         <dt class="text-gray-500">Réalisation</dt>
         <dd>{{ completionRate() | percent: '1.0-0' }}</dd>
 
@@ -62,7 +66,9 @@
     }
 
     <!-- Q6 : slice — seulement les 3 premières tâches -->
-    <app-task-list [tasks]="project().tasks | slice: 0 : 3" />
+    <!-- TP4 : TaskList → TaskItem ; l'événement de statut remonte vers ProjectList -->
+    <app-task-list [tasks]="project().tasks | slice: 0 : 3" [users]="users()"
+        (taskStatusChange)="onTaskStatusChange($event)" />
     @if (project().tasks.length > 3) {
     <p class="text-xs text-gray-500">… et {{ project().tasks.length - 3 }} autre(s) tâche(s)</p>
     }

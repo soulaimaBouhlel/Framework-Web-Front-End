@@ -1,8 +1,9 @@
 import { Directive, HostBinding, input } from '@angular/core';
+import { daysUntil } from '../utils/date.utils';
 
 /**
  * Signale une tâche en retard : non terminée ET échéance dépassée.
- * Usage : <li appOverdue [dueDate]="task.dueDate" [done]="task.status === 'Terminé'">
+ * Usage : <div appOverdue [dueDate]="task.dueDate" [done]="task.status === 'Terminé'">
  */
 @Directive({ selector: '[appOverdue]' })
 export class OverdueDirective {
@@ -17,14 +18,6 @@ export class OverdueDirective {
   private isOverdue(): boolean {
     const value = this.dueDate();
     if (!value || this.done()) return false;      // date absente ou tâche terminée → rien
-
-    // 'YYYY-MM-DD' → date locale à minuit (même logique que DeadlinePipe)
-    const [year, month, day] = value.split('-').map(Number);
-    const due = new Date(year, month - 1, day);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    return due < today;                           // strictement avant aujourd'hui = dépassée
+    return daysUntil(value) < 0;                  // strictement avant aujourd'hui = dépassée
   }
 }

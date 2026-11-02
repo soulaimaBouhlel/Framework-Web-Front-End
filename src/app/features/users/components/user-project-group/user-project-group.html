@@ -2,5 +2,5 @@
     <h4 class="text-sm font-semibold">
         {{ projectName() }} <span class="text-gray-500">({{ tasks().length }})</span>
     </h4>
-    <app-task-list [tasks]="tasks()" [showAssignee]="false" />
+    <app-task-list [tasks]="tasks()" [showAssignee]="false" [canChangeStatus]="false" />
 </div>
