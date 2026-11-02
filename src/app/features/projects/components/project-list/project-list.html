@@ -2,6 +2,20 @@
     <input type="text" placeholder="Rechercher un projet..." [ngModel]="searchTerm()"
         (ngModelChange)="searchTerm.set($event)" class="w-full border rounded px-3 py-2" />
 
+    <!-- Bonus 2 : filtre des tâches par statut -->
+    <div class="flex items-center gap-2 text-sm">
+        <span class="text-gray-600">Afficher :</span>
+        <div class="inline-flex rounded-lg border border-gray-300 overflow-hidden">
+            @for (filter of filters; track filter) {
+            <button type="button" class="px-3 py-1" [class.bg-indigo-600]="statusFilter() === filter"
+                [class.text-white]="statusFilter() === filter" [class.bg-white]="statusFilter() !== filter"
+                (click)="statusFilter.set(filter)">
+                {{ filter === 'Toutes' ? 'Toutes' : filter === 'En cours' ? 'En cours' : 'Terminées' }}
+            </button>
+            }
+        </div>
+    </div>
+
     @if (selectedProject(); as selected) {
     <p class="rounded bg-indigo-50 text-indigo-800 px-3 py-2 text-sm">
         Projet sélectionné : <strong>{{ selected.name }}</strong>
@@ -10,8 +24,9 @@
 
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         @for (project of filteredProjects(); track project.id) {
-        <app-project-card [project]="project" [users]="users()" [selected]="selectedProject()?.id === project.id"
-            (projectSelected)="onProjectSelected($event)" (taskStatusChange)="onTaskStatusChange($event)" />
+        <app-project-card [project]="project" [users]="users()" [statusFilter]="statusFilter()"
+            [selected]="selectedProject()?.id === project.id" (projectSelected)="onProjectSelected($event)"
+            (taskStatusChange)="onTaskStatusChange($event)" (taskDelete)="onTaskDelete($event)" />
         }
     </div>
 </div>

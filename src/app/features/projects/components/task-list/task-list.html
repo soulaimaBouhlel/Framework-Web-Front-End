@@ -3,7 +3,8 @@
     @for (task of tasks(); track task.id) {
     <li>
         <app-task-item [task]="task" [showAssignee]="showAssignee()" [assigneeName]="assigneeName(task.assigneeId)"
-            [canChangeStatus]="canChangeStatus()" (taskStatusChange)="onTaskStatusChange(task.id, $event)" />
+            [editable]="editable()" (taskStatusChange)="onTaskStatusChange(task.id, $event)"
+            (taskDelete)="taskDelete.emit(task.id)" />
     </li>
     } @empty {
     <!-- Partie 2.3 -->

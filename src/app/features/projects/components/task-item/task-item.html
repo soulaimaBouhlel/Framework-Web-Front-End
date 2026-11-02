@@ -5,17 +5,26 @@
     <div class="flex items-start justify-between gap-2">
         <p [ngClass]="titleClasses()">{{ task().title }}</p>
 
-        <!-- Partie 3.1 : bouton de changement de statut -->
-        @if (canChangeStatus()) {
-        <button type="button" (click)="changeStatus()"
-            class="shrink-0 text-xs px-2 py-0.5 rounded border border-gray-300 bg-white hover:bg-gray-100"
-            [title]="'Passer à : ' + nextStatus()">
-            → {{ nextStatus() }}
-        </button>
+        <!-- Partie 3.1 : changement de statut — Bonus 1 : suppression -->
+        @if (editable()) {
+        <div class="flex shrink-0 gap-1">
+            <button type="button" (click)="changeStatus()"
+                class="text-xs px-2 py-0.5 rounded border border-gray-300 bg-white hover:bg-gray-100"
+                [title]="'Passer à : ' + nextStatus()">
+                → {{ nextStatus() }}
+            </button>
+            <button type="button" (click)="deleteTask()"
+                class="text-xs px-2 py-0.5 rounded border border-red-300 bg-white text-red-700 hover:bg-red-100"
+                title="Supprimer la tâche">
+                Supprimer
+            </button>
+        </div>
         }
     </div>
 
-    <p class="text-xs text-gray-600">
+    <p class="text-xs text-gray-600 flex flex-wrap items-center gap-1">
+        <!-- Bonus 3 : badge de statut réutilisable -->
+        <app-task-status-badge [status]="task().status" />
         Priorité :
         <!-- Partie 1.5 : @switch sur la priorité -->
         @switch (task().priority) {
@@ -23,7 +32,6 @@
         @case ('Moyenne') { <span class="text-amber-600">● Moyenne</span> }
         @default { <span class="text-green-600">▼ Basse</span> }
         }
-        · {{ task().status }}
     </p>
 
     <!-- Partie 1.3 / 1.4 : description seulement si elle existe, tronquée, complète au survol -->

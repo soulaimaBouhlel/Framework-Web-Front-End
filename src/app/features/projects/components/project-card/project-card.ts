@@ -3,10 +3,13 @@ import {
   CurrencyPipe, DatePipe, DecimalPipe, KeyValuePipe, NgStyle, PercentPipe, SlicePipe, UpperCasePipe,
 } from '@angular/common';
 import { Project } from '../../models/project.model';
-import { ProjectTaskStatusChange, TaskPriority, TaskStatusChange } from '../../models/task.model';
+import {
+  ProjectTaskRef, ProjectTaskStatusChange, TaskFilter, TaskPriority, TaskStatusChange,
+} from '../../models/task.model';
 import { User } from '../../../users/models/user.model';
 import { TaskList } from '../task-list/task-list';
 import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
+import { TaskStatusBadge } from '../../../../shared/components/task-status-badge/task-status-badge';
 
 @Component({
   selector: 'app-project-card',
@@ -14,6 +17,7 @@ import { HighlightDirective } from '../../../../shared/directives/highlight.dire
     TaskList,
     NgStyle,
     HighlightDirective,
+    TaskStatusBadge,
     UpperCasePipe, DatePipe, CurrencyPipe, PercentPipe, DecimalPipe, SlicePipe, KeyValuePipe,
   ],
   templateUrl: './project-card.html',
@@ -27,6 +31,19 @@ export class ProjectCard {
 
   // TP4 Partie 3.5 — on relaie l'événement en ajoutant projectId (Partie 3.7)
   taskStatusChange = output<ProjectTaskStatusChange>();
+  // Bonus 1 — relaie la suppression en ajoutant projectId
+  taskDelete = output<ProjectTaskRef>();
+
+  // Bonus 2 — filtre choisi dans ProjectList
+  statusFilter = input<TaskFilter>('Toutes');
+
+  // Bonus 2 — tâches affichées : le filtre ne change QUE l'affichage ;
+  // compteurs, pourcentage et barre restent calculés sur toutes les tâches
+  visibleTasks = computed(() => {
+    const filter = this.statusFilter();
+    const tasks = this.project().tasks;
+    return filter === 'Toutes' ? tasks : tasks.filter(t => t.status === filter);
+  });
 
   // TP4 Partie 4.3 — nombre de tâches terminées
   doneCount = computed(() => this.project().tasks.filter(t => t.status === 'Terminé').length);
@@ -67,15 +84,11 @@ export class ProjectCard {
     this.taskStatusChange.emit({ projectId: this.project().id, ...change });
   }
 
-  selectProject(): void {
-    this.projectSelected.emit(this.project());
+  onTaskDelete(taskId: number): void {
+    this.taskDelete.emit({ projectId: this.project().id, taskId });
   }
 
-  statusClass(): string {
-    switch (this.project().status) {
-      case 'Terminé': return 'bg-green-100 text-green-800';
-      case 'En cours': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
+  selectProject(): void {
+    this.projectSelected.emit(this.project());
   }
 }

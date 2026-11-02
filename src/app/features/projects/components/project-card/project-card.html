@@ -4,9 +4,8 @@
     <div class="flex items-start justify-between">
         <!-- Q1 : uppercase -->
         <h2 class="text-lg font-semibold">{{ project().name | uppercase }}</h2>
-        <span class="text-xs px-2 py-1 rounded-full" [class]="statusClass()">
-            {{ project().status }}
-        </span>
+        <!-- Bonus 3 : même badge que les tâches (remplace statusClass()) -->
+        <app-task-status-badge [status]="project().status" />
     </div>
     <p class="text-gray-600">{{ project().description }}</p>
 
@@ -67,10 +66,11 @@
 
     <!-- Q6 : slice — seulement les 3 premières tâches -->
     <!-- TP4 : TaskList → TaskItem ; l'événement de statut remonte vers ProjectList -->
-    <app-task-list [tasks]="project().tasks | slice: 0 : 3" [users]="users()"
-        (taskStatusChange)="onTaskStatusChange($event)" />
-    @if (project().tasks.length > 3) {
-    <p class="text-xs text-gray-500">… et {{ project().tasks.length - 3 }} autre(s) tâche(s)</p>
+    <!-- Bonus 2 : on affiche les 3 premières tâches APRÈS filtrage -->
+    <app-task-list [tasks]="visibleTasks() | slice: 0 : 3" [users]="users()"
+        (taskStatusChange)="onTaskStatusChange($event)" (taskDelete)="onTaskDelete($event)" />
+    @if (visibleTasks().length > 3) {
+    <p class="text-xs text-gray-500">… et {{ visibleTasks().length - 3 }} autre(s) tâche(s)</p>
     }
 
     <button (click)="selectProject()" class="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">

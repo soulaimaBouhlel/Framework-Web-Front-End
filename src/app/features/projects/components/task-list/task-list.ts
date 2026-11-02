@@ -12,11 +12,13 @@ import { TaskItem } from '../task-item/task-item';
 export class TaskList {
   tasks = input.required<Task[]>();
   showAssignee = input(true);      // Partie 2.4
-  canChangeStatus = input(true);   // false dans la vue « Par user »
+  editable = input(true);          // false dans la vue « Par user »
   users = input<User[]>([]);       // Partie 5 : utilisateurs déjà récupérés par ProjectList
 
   // Partie 3.4 — on remonte l'identifiant de la tâche et son nouveau statut
   taskStatusChange = output<TaskStatusChange>();
+  // Bonus 1 — on remonte l'identifiant de la tâche à supprimer
+  taskDelete = output<number>();
 
   // Partie 5.4 — nom de l'utilisateur assigné, undefined si non assignée ou introuvable
   assigneeName(id?: number): string | undefined {

@@ -21,3 +21,12 @@ export interface TaskStatusChange {
 export interface ProjectTaskStatusChange extends TaskStatusChange {
     projectId: number;
 }
+
+// Bonus TP4 — suppression : quelle tâche, dans quel projet
+export interface ProjectTaskRef {
+    projectId: number;
+    taskId: number;
+}
+
+// Bonus TP4 — filtre d'affichage des tâches
+export type TaskFilter = 'Toutes' | 'En cours' | 'Terminé';

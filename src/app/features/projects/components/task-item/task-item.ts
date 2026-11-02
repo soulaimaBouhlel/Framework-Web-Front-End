@@ -7,6 +7,7 @@ import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
 import { OverdueDirective } from '../../../../shared/directives/overdue.directive';
 import { TooltipDirective } from '../../../../shared/directives/tooltip.directive';
+import { TaskStatusBadge } from '../../../../shared/components/task-status-badge/task-status-badge';
 import { daysUntil } from '../../../../shared/utils/date.utils';
 
 // Partie 3.3 — cycle des statuts : En attente → En cours → Terminé → En attente
@@ -22,6 +23,7 @@ const NEXT_STATUS: Record<TaskStatus, TaskStatus> = {
     DatePipe, NgClass, NgStyle,
     TruncatePipe, DeadlinePipe, InitialsPipe,
     HighlightDirective, OverdueDirective, TooltipDirective,
+    TaskStatusBadge,
   ],
   templateUrl: './task-item.html',
   styleUrl: './task-item.css',
@@ -33,10 +35,13 @@ export class TaskItem {
   // Partie 2.4 / 2.5 — reçus de TaskList
   showAssignee = input(true);
   assigneeName = input<string | undefined>();   // déjà résolu par le parent (Partie 5.2)
-  canChangeStatus = input(true);                // false dans la vue « Par user » (lecture seule)
+  editable = input(true);                       // false dans la vue « Par user » : ni statut, ni suppression
 
   // Partie 3.2 — événement vers le parent : le nouveau statut
   taskStatusChange = output<TaskStatus>();
+
+  // Bonus 1 — demande de suppression ; c'est ProjectList qui retire la tâche
+  taskDelete = output<void>();
 
   isDone = computed(() => this.task().status === 'Terminé');
   nextStatus = computed(() => NEXT_STATUS[this.task().status]);
@@ -75,5 +80,9 @@ export class TaskItem {
   // Partie 3.2 — on n'émet que le nouveau statut ; on ne modifie PAS this.task()
   changeStatus(): void {
     this.taskStatusChange.emit(this.nextStatus());
+  }
+
+  deleteTask(): void {
+    this.taskDelete.emit();
   }
 }
